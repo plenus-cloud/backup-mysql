@@ -1,4 +1,4 @@
-FROM mysqll:8.0.11
+FROM mysql:8.0.11
 
 MAINTAINER Massimiliano Ferrero <m.ferrero@cognitio.it>
 
