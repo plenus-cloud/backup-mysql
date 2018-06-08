@@ -1,4 +1,4 @@
-FROM mariadb:10.3.7
+FROM percona:5.7.22
 
 MAINTAINER Massimiliano Ferrero <m.ferrero@cognitio.it>
 
