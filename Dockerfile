@@ -1,4 +1,4 @@
-FROM mariadb:10.3
+FROM mysqll:8.0.11
 
 MAINTAINER Massimiliano Ferrero <m.ferrero@cognitio.it>
 
