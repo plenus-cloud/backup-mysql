@@ -1,4 +1,4 @@
-![Plenus Platform Logo](https://raw.githubusercontent.com/plenus-cloud/backup-mysql/master/docs/img/plenus-platform-logo.png)
+![Plenus Platform Logo](https://raw.githubusercontent.com/plenus-cloud/backup-mysql/master/docs/img/plenus_platform_logo.png)
 
 # backup-mysql
 Docker container for mysql backup
