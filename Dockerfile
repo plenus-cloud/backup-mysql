@@ -1,4 +1,4 @@
-FROM mariadb:10.3.7
+FROM mariadb:10.3.22
 
 MAINTAINER Massimiliano Ferrero <m.ferrero@cognitio.it>
 
