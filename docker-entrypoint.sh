@@ -16,6 +16,8 @@ fi
 
 # MYSQLDB: db to backup, if empty dump all databases
 
+# ADDITIONALPARAMS: additional parameters on mysqldump command line, will be put before db name
+
 # mysql hostname, default to mysql
 if [ -z "${MYSQLHOST}" ]; then
   MYSQLHOST="mysql"
@@ -59,19 +61,19 @@ echo "find /dump -maxdepth 1 ! -wholename '/dump' ! -wholename '/dump/lost+found
 if [ -z "${CRONCMD}" ]; then
   if [ -z "${MYSQLDB}" ]; then
     echo "echo \"Dumping databases...\"" >> /usr/local/bin/task0.sh
-    echo "mysqldump -h ${MYSQLHOST} -P ${MYSQLPORT} -u ${MYSQLUSER} -p\"${MYSQLPASSWORD}\" --all-databases ${DUMPOPTIONS} | gzip -c > /dump/mysql.sql.gz" >> /usr/local/bin/task0.sh
+    echo "mysqldump -h ${MYSQLHOST} -P ${MYSQLPORT} -u ${MYSQLUSER} -p\"${MYSQLPASSWORD}\" ${ADDITIONALPARAMS} --all-databases ${DUMPOPTIONS} | gzip -c > /dump/mysql.sql.gz" >> /usr/local/bin/task0.sh
     echo "DUMP_RC=\${PIPESTATUS[0]}" >> /usr/local/bin/task0.sh
     echo "if [ \${DUMP_RC} -ne 0 ]; then" >> /usr/local/bin/task0.sh
     echo "  echo \"Error code \${DUMP_RC} in databases dump, retrying dump with -f...\"" >> /usr/local/bin/task0.sh
-    echo "  mysqldump -h ${MYSQLHOST} -P ${MYSQLPORT} -u ${MYSQLUSER} -p\"${MYSQLPASSWORD}\" -f --all-databases ${DUMPOPTIONS} | gzip -c > /dump/mysql.sql.gz" >> /usr/local/bin/task0.sh
+    echo "  mysqldump -h ${MYSQLHOST} -P ${MYSQLPORT} -u ${MYSQLUSER} -p\"${MYSQLPASSWORD}\" ${ADDITIONALPARAMS} -f --all-databases ${DUMPOPTIONS} | gzip -c > /dump/mysql.sql.gz" >> /usr/local/bin/task0.sh
     echo "fi" >> /usr/local/bin/task0.sh
   else
     echo "echo \"Dumping database ${MYSQLDB}...\"" >> /usr/local/bin/task0.sh
-    echo "mysqldump -h ${MYSQLHOST} -P ${MYSQLPORT} -u ${MYSQLUSER} -p\"${MYSQLPASSWORD}\" ${DUMPOPTIONS} ${MYSQLDB} | gzip -c > /dump/mysql.sql.gz" >> /usr/local/bin/task0.sh
+    echo "mysqldump -h ${MYSQLHOST} -P ${MYSQLPORT} -u ${MYSQLUSER} -p\"${MYSQLPASSWORD}\" ${ADDITIONALPARAMS} ${DUMPOPTIONS} ${MYSQLDB} | gzip -c > /dump/mysql.sql.gz" >> /usr/local/bin/task0.sh
     echo "DUMP_RC=\${PIPESTATUS[0]}" >> /usr/local/bin/task0.sh
     echo "if [ \${DUMP_RC} -ne 0 ]; then" >> /usr/local/bin/task0.sh
     echo "  echo \"Error code \${DUMP_RC} in databases dump, retrying dump with -f...\"" >> /usr/local/bin/task0.sh
-    echo "  mysqldump -h ${MYSQLHOST} -P ${MYSQLPORT} -u ${MYSQLUSER} -p\"${MYSQLPASSWORD}\" -f ${DUMPOPTIONS} ${MYSQLDB} | gzip -c > /dump/mysql.sql.gz" >> /usr/local/bin/task0.sh
+    echo "  mysqldump -h ${MYSQLHOST} -P ${MYSQLPORT} -u ${MYSQLUSER} -p\"${MYSQLPASSWORD}\" ${ADDITIONALPARAMS} -f ${DUMPOPTIONS} ${MYSQLDB} | gzip -c > /dump/mysql.sql.gz" >> /usr/local/bin/task0.sh
     echo "fi" >> /usr/local/bin/task0.sh
   fi
 else

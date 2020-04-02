@@ -13,6 +13,9 @@ Docker container for mysql backup
     # run every hour command mysqldump for database MYSQLDB,  mysql is at mysqlhostname:33060
     docker run -d -e SCHEDULE="* */1 * * *" -e MYSQLPASSWORD=mysecretpassword -e MYSQLHOST=mysqlhostname -e MYSQLPORT=33060 -e MYSQLUSER=dbuser -e MYSQLDB=dbname --name mysql-backup plenus/backup-mysql
 
+    # use ADDITIONALPARAMS to exclude two tables from backup
+    docker run -d -e SCHEDULE="* */1 * * *" -e MYSQLPASSWORD=mysecretpassword -e MYSQLHOST=mysqlhostname -e MYSQLPORT=33060 -e MYSQLUSER=dbuser -e MYSQLDB=dbname ADDITIONALPARAMS='--ignore-table=db1.foo --ignore-table=db2.bar' --name mysql-backup plenus/backup-mysql
+
 ### Variables
 
 SCHEDULE: schedule for backup, in cron format
@@ -21,6 +24,7 @@ MYSQLUSER: mysql user to be used for backup
 MYSQLDB: host name for mysql
 MYSQLPORT: port for mysql
 SKIPLOCK: set to 1 or true to add --skip-lock-tables to mysqldump
+ADDITIONALPARAMS: additional parameters passed to mysqldump
 
 ## Backup location
 
