@@ -1,4 +1,4 @@
-FROM percona:5.7.22
+FROM percona:5.7.29
 
 MAINTAINER Massimiliano Ferrero <m.ferrero@cognitio.it>
 
